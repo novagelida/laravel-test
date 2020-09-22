@@ -10,7 +10,7 @@ class GifProvider extends Model
     use HasFactory;
 
     public $incrementing = false;
-    protected $primaryKey = 'slug';
+    protected $primaryKey = 'identifier';
     protected $keyType = 'string';
 
 }
