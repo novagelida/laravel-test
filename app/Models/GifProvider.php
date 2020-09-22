@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class GifProvider extends Model
 {
     use HasFactory;
+
+    public $incrementing = false;
+    protected $primaryKey = 'slug';
+    protected $keyType = 'string';
+
 }
