@@ -15,11 +15,12 @@ class CreateGifProvidersTable extends Migration
     {
         Schema::create('gif_providers', function (Blueprint $table) {
             //TODO: slug must have just lowercase letters and underscores
-            $table->string('slug');
+            //TODO: 20 might be a little restrictive, I'm just having a go
+            $table->string('identifier', 20);
             $table->text('description');
             $table->integer('calls');
             $table->json('credentials');
-            $table->primary('slug');
+            $table->primary('identifier');
         });
     }
 
