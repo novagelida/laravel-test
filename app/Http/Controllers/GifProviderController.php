@@ -9,9 +9,9 @@ class GifProviderController extends Controller
 {
     private const EMPTY_ARRAY_MESSAGE = "Sorry, we didn't find any available gif providers";
 
-    public function show()
+    public function show($identifier)
     {
-
+        return GifProvider::where('identifier', $identifier)->get();
     }
 
     public function list()
