@@ -14,8 +14,12 @@ class CreateGifProvidersTable extends Migration
     public function up()
     {
         Schema::create('gif_providers', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            //TODO: slug must have just lowercase letters and underscores
+            $table->string('slug');
+            $table->text('description');
+            $table->integer('calls');
+            $table->json('credentials');
+            $table->primary('slug');
         });
     }
 
