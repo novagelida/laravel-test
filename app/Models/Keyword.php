@@ -9,6 +9,7 @@ class Keyword extends Model
 {
     use HasFactory;
     
+    //TODO: $incrementig = false is probably overhead
     public $incrementing = false;
     protected $primaryKey = 'value';
     protected $keyType = 'string';

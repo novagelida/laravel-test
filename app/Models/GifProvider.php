@@ -9,6 +9,7 @@ class GifProvider extends Model
 {
     use HasFactory;
 
+    //TODO: $incrementig = false is probably overhead
     public $incrementing = false;
     protected $primaryKey = 'identifier';
     protected $keyType = 'string';

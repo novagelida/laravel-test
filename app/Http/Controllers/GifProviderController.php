@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 class GifProviderController extends Controller
 {
+    //TODO: those messages can go to the Configuration tables. I don't need to hardcode them.
     private const EMPTY_ARRAY_MESSAGE = "Sorry, we didn't find any available gif providers";
     private const PROVIDER_NOT_FOUND_MESSAGE = "Sorry, we didn't find any provider with the requested identifier";
 
-    public function showStats($identifier)
+    public function showStats(string $identifier)
     {
         $providerData = GifProvider::where('identifier', $identifier)->first();
 
