@@ -9,7 +9,7 @@ Route::get('/', function () {
 });
 
 Route::get('/providers', [GifProviderController::class, 'list']);
-Route::get('/provider/{identifiers}/stats', [GifProviderController::class, 'show']);
+Route::get('/provider/{identifiers}/stats', [GifProviderController::class, 'showStats']);
 Route::post('/provider/{identifiers}', 'GifProviderController@setDefaultProvider');
 Route::get('/gifs/{keyword}', 'SearchController@search');
 Route::get('/gifs/{keyword}/stats', 'SearchController@showStatsPerKeyword');

@@ -13,4 +13,8 @@ class GifProvider extends Model
     protected $primaryKey = 'identifier';
     protected $keyType = 'string';
 
+    public function keyword()
+    {
+        return $this->belongsToMany('App\Models\Keyword');
+    }
 }

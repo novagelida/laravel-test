@@ -10,7 +10,7 @@ class GifProviderController extends Controller
     private const EMPTY_ARRAY_MESSAGE = "Sorry, we didn't find any available gif providers";
     private const PROVIDER_NOT_FOUND_MESSAGE = "Sorry, we didn't find any provider with the requested identifier";
 
-    public function show($identifier)
+    public function showStats($identifier)
     {
         $providerData = GifProvider::where('identifier', $identifier)->first();
 
@@ -19,7 +19,7 @@ class GifProviderController extends Controller
             abort(404, self::PROVIDER_NOT_FOUND_MESSAGE);
         }
 
-        $toReturn = ["calls" => $providerData->calls];
+        $toReturn = ["calls" => $providerData->calls, "keywords" => $providerData->keyword()->get()];
 
         return $toReturn;
     }
