@@ -11,6 +11,7 @@ class GifProvider extends Model
 
     //TODO: $incrementig = false is probably overhead
     public $incrementing = false;
+    public $timestamps = false;
     protected $primaryKey = 'identifier';
     protected $keyType = 'string';
     protected $hidden = ['pivot'];

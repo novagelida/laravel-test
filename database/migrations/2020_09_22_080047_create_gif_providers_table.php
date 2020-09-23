@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\GifProvider;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,6 +23,8 @@ class CreateGifProvidersTable extends Migration
             $table->json('credentials');
             $table->primary('identifier');
         });
+
+        GifProvider::factory()->create();
     }
 
     /**
