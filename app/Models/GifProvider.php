@@ -12,9 +12,10 @@ class GifProvider extends Model
     public $incrementing = false;
     protected $primaryKey = 'identifier';
     protected $keyType = 'string';
+    protected $hidden = ['pivot'];
 
     public function keyword()
     {
-        return $this->belongsToMany('App\Models\Keyword');
+        return $this->belongsToMany(Keyword::class);
     }
 }

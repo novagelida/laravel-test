@@ -19,7 +19,8 @@ class GifProviderController extends Controller
             abort(404, self::PROVIDER_NOT_FOUND_MESSAGE);
         }
 
-        $toReturn = ["calls" => $providerData->calls, "keywords" => $providerData->keyword()->get()];
+        $toReturn = ["calls" => $providerData->calls, 
+                     "keywords" => $providerData->keyword()->select('keyword_value', 'calls')->get()];
 
         return $toReturn;
     }

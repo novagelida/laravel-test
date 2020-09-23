@@ -17,7 +17,7 @@ class GifProviderKeyword extends Migration
             $table->id()->nullable(false)->autoIncrement();
             $table->string('keyword_value', 100);
             $table->string('gif_provider_identifier', 20);
-            $table->integer('counter');
+            $table->integer('calls');
             $table->foreign('gif_provider_identifier')->references('identifier')->on('gif_providers');
             $table->foreign('keyword_value')->references('value')->on('keywords');
         });

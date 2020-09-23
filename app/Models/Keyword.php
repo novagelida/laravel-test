@@ -12,6 +12,7 @@ class Keyword extends Model
     public $incrementing = false;
     protected $primaryKey = 'value';
     protected $keyType = 'string';
+    protected $hidden = ['pivot'];
 
     public function search($value)
     {
@@ -22,6 +23,6 @@ class Keyword extends Model
 
     public function gifProvider()
     {
-        return $this->belongsToMany('App\Models\GifProvider');
+        return $this->belongsToMany(GifProvider::class);
     }
 }
