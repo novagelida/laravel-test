@@ -8,10 +8,21 @@ use Illuminate\Http\Request;
 class GifProviderController extends Controller
 {
     private const EMPTY_ARRAY_MESSAGE = "Sorry, we didn't find any available gif providers";
+    private const PROVIDER_NOT_FOUND_MESSAGE = "Sorry, we didn't find any provider with the requested identifier";
 
-    public function show()
+    public function showStats($identifier)
     {
+        $providerData = GifProvider::where('identifier', $identifier)->first();
 
+        if (empty($providerData->identifier))
+        {
+            abort(404, self::PROVIDER_NOT_FOUND_MESSAGE);
+        }
+
+        $toReturn = ["calls" => $providerData->calls, 
+                     "keywords" => $providerData->keyword()->select('keyword_value', 'calls')->get()];
+
+        return $toReturn;
     }
 
     public function list()
