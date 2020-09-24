@@ -17,9 +17,14 @@ class ConfigurationProvider implements IConfigurationProvider
         $this->currentGifProvider = $this->retrieveCurrentGifProvider();
     }
 
-    public function getFormatterName()
+    public function getDefaultRequestProtocol() : string
     {
-        return $this->defaultConfiguration->formatter;
+        return $this->defaultConfiguration->default_request_protocol;
+    }
+
+    public function getMaxResultsToShow() : int
+    {
+        return $this->defaultConfiguration->max_results_to_show;
     }
 
     public function getGifProvider()

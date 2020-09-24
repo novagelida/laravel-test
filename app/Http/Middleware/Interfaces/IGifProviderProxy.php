@@ -6,5 +6,7 @@ interface IGifProviderProxy
 {
     public function incrementCalls(string $keyword);
 
-    public function getResearchStrategy();
+    public function getCredentials();
+
+    public function getResearchDomain() : string;
 }

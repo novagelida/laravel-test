@@ -20,8 +20,7 @@ class CreateConfigurationsTable extends Migration
             $table->string('current_gif_provider', 20)->nullable(false);
             $table->integer('search_term_min_length');
             $table->integer('max_results_to_show')->default(5);
-            $table->enum('formatter', ['toSimpleArray'])->default('toSimpleArray');
-            //$table->string('formatter')->default('toSimpleArray');
+            $table->string('default_request_protocol', 5)->default('https');
             $table->primary('id');
             $table->foreign('current_gif_provider')->references('identifier')->on('gif_providers');
         });

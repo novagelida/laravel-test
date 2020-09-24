@@ -2,35 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\Interfaces\IConfigurationProvider;
 use App\Http\Middleware\Interfaces\IKeywordProxy;
+use App\Http\Middleware\Interfaces\IConfigurationProvider;
 use App\Http\Middleware\Interfaces\IGifProviderProxy;
 use App\Http\Middleware\Interfaces\ISearchResultFormatter;
+use App\Http\Middleware\Interfaces\IResearchStrategy;
 use Illuminate\Support\Facades\Cache;
 
 class SearchController extends Controller
 {
     private $configuration;
-    private $keywordProxy;
     private $gifProviderProxy;
+    private $keywordProxy;
+    private $researchStrategy;
 
     public function __construct(IConfigurationProvider $configurationProvider,
                                 IKeywordProxy $keywordProxy,
                                 IGifProviderProxy $gifProviderProxy,
-                                ISearchResultFormatter $searchResultFormatter)
+                                ISearchResultFormatter $searchResultFormatter,
+                                IResearchStrategy $researchStrategy)
     {
         $this->configuration = $configurationProvider;
-        $this->keywordProxy = $keywordProxy;
         $this->gifProviderProxy = $gifProviderProxy;
+        $this->keywordProxy = $keywordProxy;
         $this->searchResultsFormatter = $searchResultFormatter;
+        $this->researchStrategy = $researchStrategy;
     }
 
     public function search(string $keyword)
     {
         $keyword = $this->sanitize($keyword);
         $this->incrementCallCounter($keyword);
-
-        $gifProvider = $this->configuration->getGifProvider();
 
         if (Cache::has($keyword))
         {
@@ -39,8 +41,8 @@ class SearchController extends Controller
 
         $this->gifProviderProxy->incrementCalls($keyword);
 
-        $results = $this->gifProviderProxy->getResearchStrategy()->search($keyword);
-        $this->searchResultsFormatter->format($results);
+        $results = $this->researchStrategy->search($keyword);
+        $results = $this->searchResultsFormatter->format($results);
 
         Cache::put($keyword, $results, now()->addHours(6));
 

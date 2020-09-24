@@ -4,19 +4,25 @@ namespace App\Http\Middleware;
 
 use App\Http\Middleware\Interfaces\IGifProviderProxy;
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
-use App\Http\Middleware\Interfaces\IResearchStrategy;
 use App\Models\GifProviderKeyword;
 
 class GifProviderProxy implements IGifProviderProxy
 {
     private $configuration;
-    private $researchStrategy;
 
-    public function __construct(IConfigurationProvider $configurationProvider,
-                                IResearchStrategy $researchStrategy)
+    public function __construct(IConfigurationProvider $configurationProvider)
     {
         $this->configuration = $configurationProvider;
-        $this->researchStrategy = $researchStrategy;
+    }
+
+    public function getCredentials()
+    {
+        return json_decode($this->configuration->getGifProvider()->credentials);
+    }
+
+    public function getResearchDomain() : string
+    {
+        return $this->configuration->getGifProvider()->research_endpoint;
     }
 
     public function incrementCalls(string $keyword)
@@ -25,11 +31,6 @@ class GifProviderProxy implements IGifProviderProxy
 
         $this->incrementProviderCalls($provider);
         $this->incrementCallsOrCreateRelationship($provider, $keyword);
-    }
-
-    public function getResearchStrategy()
-    {
-        return $this->researchStrategy;
     }
 
     private function incrementProviderCalls($provider)

@@ -4,5 +4,5 @@ namespace App\Http\Middleware\Interfaces;
 
 interface ISearchResultFormatter
 {
-    public function format(array $results) : array;
+    public function format($results);
 }

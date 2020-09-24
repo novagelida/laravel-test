@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(IConfigurationProvider $configuration)
     {
-        $this->app->bind(ISearchResultFormatter::class, SearchResultFormatterClassMapper::map($configuration->getFormatterName()));
+        $this->app->bind(ISearchResultFormatter::class, SearchResultFormatterClassMapper::map($configuration->getGifProvider()->formatter));
         $this->app->bind(IResearchStrategy::class, ResearchStrategyClassMapper::map($configuration->getGifProvider()->research_strategy));
     }
 }

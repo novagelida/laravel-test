@@ -4,10 +4,10 @@ namespace App\Http\Middleware\Strategies;
 
 use App\Http\Middleware\Interfaces\ISearchResultFormatter;
 
-class ToSimpleArraySearchResultFormatter implements ISearchResultFormatter
+class TenorResultToSimpleArrayFormatter implements ISearchResultFormatter
 {
-    public function format(array $results) : array
+    public function format($results)
     {
-        return [];
+        return $results;
     }
 }

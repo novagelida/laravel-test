@@ -8,5 +8,7 @@ interface IConfigurationProvider
 
     public function getSearchTermMinLength() : int;
 
-    public function getFormatterName();
+    public function getDefaultRequestProtocol() : string;
+
+    public function getMaxResultsToShow() : int;
 }

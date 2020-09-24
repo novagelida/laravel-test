@@ -26,7 +26,8 @@ class GifProviderFactory extends Factory
             'identifier' => 'tenor',
             'description' => 'this is tenor',
             'calls' => 0,
-            'credentials' => json_encode(['user' => 'test', 'pw' => 'test'])
+            'credentials' => json_encode(['api_key' => '7E8WQAGAZ1I1', 'protocol' => 'https']),
+            'research_endpoint' => 'api.tenor.com/v1/search'
         ];
     }
 }

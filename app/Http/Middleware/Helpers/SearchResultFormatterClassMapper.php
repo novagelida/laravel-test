@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware\Helpers;
 
-use App\Http\Middleware\Strategies\ToSimpleArraySearchResultFormatter;
+use App\Http\Middleware\Strategies\TenorResultToSimpleArrayFormatter;
 
 class SearchResultFormatterClassMapper
 {
@@ -20,6 +20,6 @@ class SearchResultFormatterClassMapper
 
     private static function initialiseClassNameMap()
     {
-        self::$classNameMap = ['toSimpleArray' => ToSimpleArraySearchResultFormatter::class];
+        self::$classNameMap = ['toSimpleArray' => TenorResultToSimpleArrayFormatter::class];
     }
 }
