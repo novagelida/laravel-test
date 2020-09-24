@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Middleware\ConfigurationProvider;
+use App\Http\Middleware\Interfaces\IConfigurationProvider;
 
 class SearchController extends Controller
 {
     private $configurationProvider;
 
-    public function __construct(ConfigurationProvider $configurationProvider)
+    public function __construct(IConfigurationProvider $configurationProvider)
     {
         $this->configurationProvider = $configurationProvider;
     }
@@ -19,7 +20,7 @@ class SearchController extends Controller
         //TODO: trim does not remove spaces in the middle of the word
         $searchTerms = $this->sanitize(trim($keyword));
 
-        return $this->configurationProvider->getTest();
+        return $this->configurationProvider->getGifProvider();
     }
 
     private function sanitize(string $keyword) : array
