@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware\Helpers;
 
-use App\Http\Middleware\ToSimpleArraySearchResultFormatter;
+use App\Http\Middleware\Strategies\ToSimpleArraySearchResultFormatter;
 
 class SearchResultFormatterClassMapper
 {

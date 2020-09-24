@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Strategies;
 
 use App\Http\Middleware\Interfaces\IResearchStrategy;
 

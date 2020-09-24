@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware\Helpers;
 
-use App\Http\Middleware\BasicTenorResearchStrategy;
+use App\Http\Middleware\Strategies\BasicTenorResearchStrategy;
 
 class ResearchStrategyClassMapper
 {
