@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
+use Illuminate\Support\Facades\Cache;
 
 class SearchController extends Controller
 {
@@ -15,26 +16,33 @@ class SearchController extends Controller
 
     public function search(string $keyword)
     {
-        $searchTerms = $this->sanitize(trim($keyword));
+        $keyword = $this->sanitize(trim($keyword));
 
         $gifProvider = $this->configuration->getGifProvider();
 
-        return $searchTerms;
+        $keywordKey = hash('md5', $keyword);
+        if (Cache::has($keywordKey))
+        {
+            //do something
+            return "item in cache";
+        }
+
+        //perform research
+        Cache::put($keywordKey, $keyword, now()->addHours(6));
+
+        return $keyword;
     }
 
-    private function sanitize(string $keyword) : array
+    private function sanitize(string $keyword) : string
     {
-        //TODO: I also need to filter away words that are smaller than 3 characters
-        return array_filter(
-            explode("_", preg_replace('/[^\w-]/', '_', $keyword)),
+        return implode(" ", array_filter(explode("_", preg_replace('/[^\w-]/', '_', strtolower($keyword))),
             function ($word) {
                 return $this->isSearchTermValid($word);
-            });
+            }));
     }
 
-    private function isSearchTermValid($term) : bool
+    private function isSearchTermValid(string $term) : bool
     {
-        return !empty($term)
-                && !(strlen($term) < $this->configuration->getSearchTermMinLength());
+        return !empty($term) && !(strlen($term) < $this->configuration->getSearchTermMinLength());
     }
 }
