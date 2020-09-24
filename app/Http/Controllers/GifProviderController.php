@@ -13,6 +13,7 @@ class GifProviderController extends Controller
 
     public function showStats(string $identifier)
     {
+        // TODO: refactor this logic.
         $providerData = GifProvider::where('identifier', $identifier)->first();
 
         if (empty($providerData->identifier))
@@ -21,7 +22,7 @@ class GifProviderController extends Controller
         }
 
         $toReturn = ["calls" => $providerData->calls, 
-                     "keywords" => $providerData->keyword()->select('keyword_value', 'calls')->get()];
+                     "keywords" => $providerData->keyword()->select('keyword_value', 'call_counter')->get()];
 
         return $toReturn;
     }
