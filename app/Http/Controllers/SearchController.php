@@ -4,18 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
 use App\Http\Middleware\Interfaces\IKeywordProxy;
+use App\Http\Middleware\Interfaces\IGifProviderProxy;
 use Illuminate\Support\Facades\Cache;
 
 class SearchController extends Controller
 {
     private $configuration;
     private $keywordProxy;
+    private $gifProviderProxy;
 
     public function __construct(IConfigurationProvider $configurationProvider,
-                                IKeywordProxy $keywordProxy)
+                                IKeywordProxy $keywordProxy,
+                                IGifProviderProxy $gifProviderProxy)
     {
         $this->configuration = $configurationProvider;
         $this->keywordProxy = $keywordProxy;
+        $this->gifProviderProxy = $gifProviderProxy;
     }
 
     public function search(string $keyword)
@@ -31,8 +35,8 @@ class SearchController extends Controller
             return Cache::get($keyword);
         }
 
-        //increment calls for provider
-        //increment calls for manytomany relationship
+        $this->gifProviderProxy->incrementCalls($keyword);
+
         //perform research
         //Cache::put($keyword, $result, now()->addHours(6));
 
@@ -41,13 +45,15 @@ class SearchController extends Controller
 
     private function incrementCallCounter(string $keyword)
     {
-        if ($this->keywordProxy->getKeyword($keyword) == null)
+        $keywordModel = $this->keywordProxy->getKeyword($keyword);
+
+        if ($keywordModel == null)
         {
             $this->keywordProxy->insertKeyword($keyword);
             return;
         }
 
-        $this->keywordProxy->incrementCallCounter($keyword);
+        $this->keywordProxy->incrementCallCounter($keywordModel);
     }
 
     private function sanitize(string $keyword) : string
