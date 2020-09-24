@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\GifProvider;
-use Illuminate\Http\Request;
 
 class GifProviderController extends Controller
 {

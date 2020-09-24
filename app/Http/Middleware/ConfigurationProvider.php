@@ -17,6 +17,11 @@ class ConfigurationProvider implements IConfigurationProvider
         $this->currentGifProvider = $this->retrieveCurrentGifProvider();
     }
 
+    public function getFormatterName()
+    {
+        return $this->defaultConfiguration->formatter;
+    }
+
     public function getGifProvider()
     {
         return $this->currentGifProvider;

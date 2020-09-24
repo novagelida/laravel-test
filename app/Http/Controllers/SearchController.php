@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
 use App\Http\Middleware\Interfaces\IKeywordProxy;
 use App\Http\Middleware\Interfaces\IGifProviderProxy;
+use App\Http\Middleware\Interfaces\ISearchResultFormatter;
 use Illuminate\Support\Facades\Cache;
 
 class SearchController extends Controller
@@ -15,32 +16,35 @@ class SearchController extends Controller
 
     public function __construct(IConfigurationProvider $configurationProvider,
                                 IKeywordProxy $keywordProxy,
-                                IGifProviderProxy $gifProviderProxy)
+                                IGifProviderProxy $gifProviderProxy,
+                                ISearchResultFormatter $searchResultFormatter)
     {
         $this->configuration = $configurationProvider;
         $this->keywordProxy = $keywordProxy;
         $this->gifProviderProxy = $gifProviderProxy;
+        $this->searchResultsFormatter = $searchResultFormatter;
     }
 
     public function search(string $keyword)
     {
-        $keyword = $this->sanitize(trim($keyword));
+        $keyword = $this->sanitize($keyword);
         $this->incrementCallCounter($keyword);
 
         $gifProvider = $this->configuration->getGifProvider();
 
         if (Cache::has($keyword))
         {
-            //do something
             return Cache::get($keyword);
         }
 
         $this->gifProviderProxy->incrementCalls($keyword);
 
-        //perform research
-        //Cache::put($keyword, $result, now()->addHours(6));
+        $results = $this->gifProviderProxy->getResearchStrategy()->search($keyword);
+        $this->searchResultsFormatter->format($results);
 
-        return $keyword;
+        Cache::put($keyword, $results, now()->addHours(6));
+
+        return $results;
     }
 
     private function incrementCallCounter(string $keyword)
@@ -58,7 +62,8 @@ class SearchController extends Controller
 
     private function sanitize(string $keyword) : string
     {
-        return implode(" ", array_filter(explode("_", preg_replace('/[^\w-]/', '_', strtolower($keyword))),
+        //TODO: This logic can go into a configurable strategy set at config time
+        return implode(" ", array_filter(explode("_", preg_replace('/[^\w-]/', '_', strtolower(trim($keyword)))),
             function ($word) {
                 return $this->isSearchTermValid($word);
             }));

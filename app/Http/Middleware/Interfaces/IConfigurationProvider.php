@@ -7,4 +7,6 @@ interface IConfigurationProvider
     public function getGifProvider();
 
     public function getSearchTermMinLength() : int;
+
+    public function getFormatterName();
 }
