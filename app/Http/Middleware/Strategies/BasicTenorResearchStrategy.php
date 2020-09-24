@@ -30,7 +30,7 @@ class BasicTenorResearchStrategy implements IResearchStrategy
         $limit = $this->configuration->getMaxResultsToShow();
 
         $response = Http::get($protocol.'://'.$domain, ['q'=>$keyword, 'key'=> $apiKey, 'limit'=>$limit]);
-        
+
         if (!$response->successful())
         {
             return self::ERROR_MESSAGE;
