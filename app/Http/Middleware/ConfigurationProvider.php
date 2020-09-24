@@ -22,6 +22,11 @@ class ConfigurationProvider implements IConfigurationProvider
         return $this->currentGifProvider;
     }
 
+    public function getSearchTermMinLength() : int
+    {
+        return $this->defaultConfiguration->search_term_min_length;
+    }
+
     private function retrieveDefaultConfiguration()
     {
         return Configuration::where('default', true)->first();

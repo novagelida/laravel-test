@@ -25,7 +25,8 @@ class ConfigurationFactory extends Factory
         return [
             'id' => "main",
             'default' => true,
-            'current_gif_provider' => 'tenor'
+            'current_gif_provider' => 'tenor',
+            'search_term_min_length' => 3
             ];
     }
 }

@@ -18,6 +18,7 @@ class CreateConfigurationsTable extends Migration
             $table->string('id', 20)->nullable(false);
             $table->boolean('default')->default(false);
             $table->string('current_gif_provider', 20)->nullable(false);
+            $table->integer('search_term_min_length');
             $table->primary('id');
             $table->foreign('current_gif_provider')->references('identifier')->on('gif_providers');
         });
