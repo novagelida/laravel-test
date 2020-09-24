@@ -9,13 +9,15 @@ class GifProvider extends Model
 {
     use HasFactory;
 
+    //TODO: $incrementig = false is probably overhead
     public $incrementing = false;
+    public $timestamps = false;
     protected $primaryKey = 'identifier';
     protected $keyType = 'string';
     protected $hidden = ['pivot'];
 
     public function keyword()
     {
-        return $this->belongsToMany(Keyword::class);
+        return $this->belongsToMany(Keyword::class)->withPivot('call_counter');
     }
 }

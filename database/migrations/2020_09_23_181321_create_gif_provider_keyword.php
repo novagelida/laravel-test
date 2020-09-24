@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class GifProviderKeyword extends Migration
+class CreateGifProviderKeyword extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ class GifProviderKeyword extends Migration
             $table->id()->nullable(false)->autoIncrement();
             $table->string('keyword_value', 100);
             $table->string('gif_provider_identifier', 20);
-            $table->integer('calls');
+            $table->integer('call_counter')->default(1);
             $table->foreign('gif_provider_identifier')->references('identifier')->on('gif_providers');
             $table->foreign('keyword_value')->references('value')->on('keywords');
         });
