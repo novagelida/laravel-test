@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
 use App\Http\Middleware\ConfigurationProvider;
+use App\Http\Middleware\Interfaces\IKeywordProxy;
+use App\Http\Middleware\KeywordProxy;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             IConfigurationProvider::class,
             ConfigurationProvider::class
+        );
+
+        $this->app->bind(
+            IKeywordProxy::class,
+            KeywordProxy::class
         );
     }
 

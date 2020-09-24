@@ -3,34 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
+use App\Http\Middleware\Interfaces\IKeywordProxy;
 use Illuminate\Support\Facades\Cache;
 
 class SearchController extends Controller
 {
     private $configuration;
+    private $keywordProxy;
 
-    public function __construct(IConfigurationProvider $configurationProvider)
+    public function __construct(IConfigurationProvider $configurationProvider,
+                                IKeywordProxy $keywordProxy)
     {
         $this->configuration = $configurationProvider;
+        $this->keywordProxy = $keywordProxy;
     }
 
     public function search(string $keyword)
     {
         $keyword = $this->sanitize(trim($keyword));
+        $this->incrementCallCounter($keyword);
 
         $gifProvider = $this->configuration->getGifProvider();
 
-        $keywordKey = hash('md5', $keyword);
-        if (Cache::has($keywordKey))
+        if (Cache::has($keyword))
         {
             //do something
-            return "item in cache";
+            return Cache::get($keyword);
         }
 
+        //increment calls for provider
+        //increment calls for manytomany relationship
         //perform research
-        Cache::put($keywordKey, $keyword, now()->addHours(6));
+        //Cache::put($keyword, $result, now()->addHours(6));
 
         return $keyword;
+    }
+
+    private function incrementCallCounter(string $keyword)
+    {
+        if ($this->keywordProxy->getKeyword($keyword) == null)
+        {
+            $this->keywordProxy->insertKeyword($keyword);
+            return;
+        }
+
+        $this->keywordProxy->incrementCallCounter($keyword);
     }
 
     private function sanitize(string $keyword) : string
