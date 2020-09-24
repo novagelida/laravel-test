@@ -8,6 +8,13 @@ class TenorResultToSimpleArrayFormatter implements ISearchResultFormatter
 {
     public function format($results)
     {
-        return $results;
+        return array_map(function ($item) {
+                return $this->extractGifUrl($item);
+            }, json_decode($results)->results);
+    }
+
+    private function extractGifUrl($item)
+    {
+        return $item->media[0]->gif->url;
     }
 }
