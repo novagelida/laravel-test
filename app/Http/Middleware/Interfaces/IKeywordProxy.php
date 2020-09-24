@@ -9,4 +9,6 @@ interface IKeywordProxy
     public function insertKeyword(string $keyword);
 
     public function getKeyword(string $keyword);
+
+    public function incrementOrCreateRelationshipCalls($keywordModel, string $keyword);
 }

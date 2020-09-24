@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Http\Middleware\Interfaces\IKeywordProxy;
 use App\Models\Keyword;
+use App\Models\GifProviderKeyword;
 
 class KeywordProxy implements IKeywordProxy
 {
@@ -14,7 +15,7 @@ class KeywordProxy implements IKeywordProxy
 
     public function incrementCallCounter($keywordModel)
     {
-        $keywordModel->calls = $keywordModel->calls+1;
+        $keywordModel->increment('calls', 1);
         $keywordModel->save();
     }
 
@@ -23,5 +24,32 @@ class KeywordProxy implements IKeywordProxy
         $keywordModel = new Keyword;
         $keywordModel->value = $keyword;
         $keywordModel->save();
+    }
+
+    public function incrementOrCreateRelationshipCalls($provider, string $keyword)
+    {
+        $relationship = $provider->keyword()->where('keyword_value', $keyword)->first();
+
+        if ($relationship == null)
+        {
+            $this->insertKeywordIntoRelationship($keyword, $provider->identifier);
+            return;
+        }
+
+        $this->incrementRelationshipCalls($relationship->pivot);
+    }
+
+    private function incrementRelationshipCalls($relationship)
+    {
+        $relationship->call_counter++;
+        $relationship->save();
+    }
+
+    private function insertKeywordIntoRelationship($keyword, $identifier)
+    {
+        $relationship = new GifProviderKeyword;
+        $relationship->keyword_value = $keyword;
+        $relationship->gif_provider_identifier = $identifier;
+        $relationship->save();
     }
 }

@@ -32,7 +32,13 @@ class SearchController extends Controller
     public function search(string $keyword)
     {
         $keyword = $this->sanitize($keyword);
-        $this->incrementCallCounter($keyword);
+
+        if (empty($keyword))
+        {
+            return "Error!";
+        }
+
+        $this->incrementKeywordCallCounter($keyword);
 
         if (Cache::has($keyword))
         {
@@ -49,17 +55,17 @@ class SearchController extends Controller
         return $results;
     }
 
-    private function incrementCallCounter(string $keyword)
+    private function incrementKeywordCallCounter(string $keyword)
     {
         $keywordModel = $this->keywordProxy->getKeyword($keyword);
 
-        if ($keywordModel == null)
-        {
+        if ($keywordModel == null) {
             $this->keywordProxy->insertKeyword($keyword);
-            return;
+        } else {
+            $this->keywordProxy->incrementCallCounter($keywordModel);
         }
 
-        $this->keywordProxy->incrementCallCounter($keywordModel);
+        $this->keywordProxy->incrementOrCreateRelationshipCalls($this->gifProviderProxy->getDefaultGifProvider(), $keyword);
     }
 
     private function sanitize(string $keyword) : string

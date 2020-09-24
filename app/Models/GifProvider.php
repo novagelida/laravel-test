@@ -18,6 +18,6 @@ class GifProvider extends Model
 
     public function keyword()
     {
-        return $this->belongsToMany(Keyword::class);
+        return $this->belongsToMany(Keyword::class)->withPivot('call_counter');
     }
 }

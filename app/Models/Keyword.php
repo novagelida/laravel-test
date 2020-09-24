@@ -13,6 +13,6 @@ class Keyword extends Model
 
     public function gifProvider()
     {
-        return $this->belongsToMany(GifProvider::class);
+        return $this->belongsToMany(GifProvider::class)->withPivot('call_counter');
     }
 }
