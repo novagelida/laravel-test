@@ -21,6 +21,7 @@ class CreateGifProvidersTable extends Migration
             $table->text('description');
             $table->integer('calls');
             $table->json('credentials');
+            $table->enum('research_strategy', ['basicTenor'])->default('basicTenor');
             $table->primary('identifier');
         });
 
