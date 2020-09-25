@@ -15,7 +15,7 @@ class KeywordProxy implements IKeywordProxy
 
     public function getStatsPerKeyword(string $keyword)
     {
-        return GifProviderKeyword::where('keyword_value', $keyword)->get();
+        return GifProviderKeyword::where('keyword_value', $keyword)->select('gif_provider_identifier', 'call_counter')->get();
     }
 
     public function incrementCallCounter($keywordModel)

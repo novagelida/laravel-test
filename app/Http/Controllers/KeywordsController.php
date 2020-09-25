@@ -15,6 +15,13 @@ class KeywordsController extends Controller
 
     public function showStatsPerKeyword($keyword)
     {
-        return $this->keywordProxy->getStatsPerKeyword($keyword);
+        $response = ["stats" => []];
+
+        foreach ($this->keywordProxy->getStatsPerKeyword($keyword) as &$item)
+        {
+            $response["stats"][$item->gif_provider_identifier] = $item->call_counter;
+        }
+
+        return $response;
     }
 }
