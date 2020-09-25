@@ -14,7 +14,9 @@ use App\Http\Middleware\TenorResultToSimpleArrayFormatter;
 use App\Http\Middleware\GifProvidersProxy;
 use App\Http\Middleware\Helpers\SearchResultFormatterClassMapper;
 use App\Http\Middleware\Helpers\ResearchStrategyClassMapper;
+use App\Http\Middleware\Interfaces\ISanitationStrategy;
 use App\Http\Middleware\KeywordProxy;
+use App\Http\Middleware\Strategies\BasicSanitationStrategy;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public $bindings = [
         IKeywordProxy::class => KeywordProxy::class,
         IGifProvidersProxy::class => GifProvidersProxy::class,
-        ISearchResultFormatter::class => TenorResultToSimpleArrayFormatter::class
+        ISearchResultFormatter::class => TenorResultToSimpleArrayFormatter::class,
+        ISanitationStrategy::class => BasicSanitationStrategy::class
     ];
 
     public $singletons  = [

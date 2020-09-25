@@ -12,7 +12,5 @@ interface IGifProviderProxy
 
     public function getResearchDomain() : string;
 
-    public function getKeywords();
-
     public function getCalls();
 }

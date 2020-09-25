@@ -15,4 +15,10 @@ class Keyword extends Model
     {
         return $this->belongsToMany(GifProvider::class)->withPivot('call_counter');
     }
+
+    public function incrementCalls()
+    {
+        $this->increment('calls', 1);
+        $this->save();
+    }
 }

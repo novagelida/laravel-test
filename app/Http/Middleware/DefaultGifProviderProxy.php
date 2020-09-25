@@ -34,11 +34,6 @@ class DefaultGifProviderProxy implements IGifProviderProxy
         $this->defaultProvider->incrementCalls();
     }
 
-    public function getKeywords()
-    {
-        return $this->defaultProvider->keyword()->select('keyword_value', 'call_counter')->get();
-    }
-
     public function getCalls()
     {
         return $this->defaultProvider->calls;

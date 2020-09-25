@@ -3,37 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Interfaces\IKeywordProxy;
-use App\Http\Middleware\Interfaces\IConfigurationProvider;
 use App\Http\Middleware\Interfaces\IGifProviderProxy;
 use App\Http\Middleware\Interfaces\ISearchResultFormatter;
 use App\Http\Middleware\Interfaces\IResearchStrategy;
+use App\Http\Middleware\Interfaces\ISanitationStrategy;
 use Illuminate\Support\Facades\Cache;
 
 class SearchController extends Controller
 {
     // TODO: This error message should suggest what the valid keywords are. 
+    // TODO: error messages should go into a value object or db
     private const INVALID_KEYWORD_MESSAGE = "Keyword not valid!";
-    private $configuration;
+    private const NO_RESULTS_MESSAGE = "No results have been found!";
+    private const IM_A_TEAPOT_ERROR_CODE = 418;
+
     private $gifProviderProxy;
     private $keywordProxy;
     private $researchStrategy;
+    private $sanitationStrategy;
 
-    public function __construct(IConfigurationProvider $configurationProvider,
-                                IKeywordProxy $keywordProxy,
+    public function __construct(IKeywordProxy $keywordProxy,
                                 IGifProviderProxy $gifProviderProxy,
                                 ISearchResultFormatter $searchResultFormatter,
-                                IResearchStrategy $researchStrategy)
+                                IResearchStrategy $researchStrategy,
+                                ISanitationStrategy $sanitationStrategy)
     {
-        $this->configuration = $configurationProvider;
         $this->gifProviderProxy = $gifProviderProxy;
         $this->keywordProxy = $keywordProxy;
         $this->searchResultsFormatter = $searchResultFormatter;
         $this->researchStrategy = $researchStrategy;
+        $this->sanitationStrategy = $sanitationStrategy;
     }
 
     public function search(string $keyword)
     {
-        $keyword = $this->sanitize($keyword);
+        $keyword = $this->sanitationStrategy->sanitize($keyword);
 
         if (empty($keyword))
         {
@@ -52,6 +56,11 @@ class SearchController extends Controller
         $results = $this->researchStrategy->search($keyword);
         $results = $this->searchResultsFormatter->format($results);
 
+        if (empty($results))
+        {
+            return response(self::NO_RESULTS_MESSAGE, self::IM_A_TEAPOT_ERROR_CODE);
+        }
+
         Cache::put($keyword, $results, now()->addHours(6));
 
         return $results;
@@ -68,19 +77,5 @@ class SearchController extends Controller
         }
 
         $this->keywordProxy->incrementOrCreateRelationshipCalls($this->gifProviderProxy->getDefaultGifProvider(), $keyword);
-    }
-
-    private function sanitize(string $keyword) : string
-    {
-        //TODO: This logic can go into a configurable strategy set at config time
-        return implode(" ", array_filter(explode("_", preg_replace('/[^\w-]/', '_', strtolower(trim($keyword)))),
-            function ($word) {
-                return $this->isSearchTermValid($word);
-            }));
-    }
-
-    private function isSearchTermValid(string $term) : bool
-    {
-        return !empty($term) && !(strlen($term) < $this->configuration->getSearchTermMinLength());
     }
 }
