@@ -14,6 +14,7 @@ use App\Http\Middleware\TenorResultToSimpleArrayFormatter;
 use App\Http\Middleware\GifProvidersProxy;
 use App\Http\Middleware\Helpers\SearchResultFormatterClassMapper;
 use App\Http\Middleware\Helpers\ResearchStrategyClassMapper;
+use App\Http\Middleware\Helpers\SanitationStrategyClassMapper;
 use App\Http\Middleware\Interfaces\ISanitationStrategy;
 use App\Http\Middleware\KeywordProxy;
 use App\Http\Middleware\Strategies\BasicSanitationStrategy;
@@ -51,5 +52,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ISearchResultFormatter::class, SearchResultFormatterClassMapper::map($configuration->getGifProvider()->formatter));
         $this->app->bind(IResearchStrategy::class, ResearchStrategyClassMapper::map($configuration->getGifProvider()->research_strategy));
+        $this->app->bind(ISanitationStrategy::class, SanitationStrategyClassMapper::map($configuration->getSanitationStrategy()));
     }
 }

@@ -11,4 +11,6 @@ interface IConfigurationProvider
     public function getDefaultRequestProtocol() : string;
 
     public function getMaxResultsToShow() : int;
+
+    public function getSanitationStrategy() : string;
 }

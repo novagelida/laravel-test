@@ -21,6 +21,7 @@ class CreateConfigurationsTable extends Migration
             $table->integer('search_term_min_length');
             $table->integer('max_results_to_show')->default(5);
             $table->string('default_request_protocol', 5)->default('https');
+            $table->enum('sanitation_strategy', ['basic'])->default('basic');
             $table->primary('id');
             $table->foreign('current_gif_provider')->references('identifier')->on('gif_providers');
         });

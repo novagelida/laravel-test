@@ -22,6 +22,11 @@ class ConfigurationProvider implements IConfigurationProvider
         return $this->defaultConfiguration->default_request_protocol;
     }
 
+    public function getSanitationStrategy() : string
+    {
+        return $this->defaultConfiguration->sanitation_strategy;
+    }
+
     public function getMaxResultsToShow() : int
     {
         return $this->defaultConfiguration->max_results_to_show;
