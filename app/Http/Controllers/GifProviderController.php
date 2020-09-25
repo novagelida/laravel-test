@@ -12,7 +12,7 @@ class GifProviderController extends Controller
 
     public function showStats(string $identifier)
     {
-        // TODO: refactor this logic.
+        // TODO: refactor this logic to inject the proxy
         $providerData = GifProvider::where('identifier', $identifier)->first();
 
         if (empty($providerData->identifier))

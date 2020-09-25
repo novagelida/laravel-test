@@ -39,13 +39,13 @@ class ConfigurationProvider implements IConfigurationProvider
 
     private function retrieveDefaultConfiguration()
     {
-        return Configuration::where('default', true)->first();
+        return Configuration::where('default', true)->firstOrFail();
     }
 
     private function retrieveCurrentGifProvider()
     {
         $currentGifProviderId = $this->defaultConfiguration->current_gif_provider;
 
-        return GifProvider::where('identifier', $currentGifProviderId)->first();
+        return GifProvider::where('identifier', $currentGifProviderId)->firstOrFail();
     }
 }
