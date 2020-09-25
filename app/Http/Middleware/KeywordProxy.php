@@ -13,6 +13,11 @@ class KeywordProxy implements IKeywordProxy
         return Keyword::where('value', $keyword)->first();
     }
 
+    public function getStatsPerKeyword(string $keyword)
+    {
+        return GifProviderKeyword::where('keyword_value', $keyword)->get();
+    }
+
     public function incrementCallCounter($keywordModel)
     {
         $keywordModel->incrementCalls();
