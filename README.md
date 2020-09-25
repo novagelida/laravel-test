@@ -9,4 +9,4 @@
 
 ## Interview test project
 
-This is an interview test project. Please see the requirements <a href="/docs/prova_tecnica.pdf"></a> 
+This is an interview test project. Please see the requirements <a href="/docs/prova_tecnica.pdf">here</a> 
