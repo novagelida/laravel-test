@@ -15,8 +15,7 @@ class KeywordProxy implements IKeywordProxy
 
     public function incrementCallCounter($keywordModel)
     {
-        $keywordModel->increment('calls', 1);
-        $keywordModel->save();
+        $keywordModel->incrementCalls();
     }
 
     public function insertKeyword(string $keyword)

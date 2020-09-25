@@ -20,4 +20,10 @@ class GifProvider extends Model
     {
         return $this->belongsToMany(Keyword::class)->withPivot('call_counter');
     }
+
+    public function incrementCalls()
+    {
+        $this->increment('calls', 1);
+        $this->save();
+    }
 }

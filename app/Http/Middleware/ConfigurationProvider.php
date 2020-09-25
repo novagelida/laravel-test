@@ -22,6 +22,11 @@ class ConfigurationProvider implements IConfigurationProvider
         return $this->defaultConfiguration->default_request_protocol;
     }
 
+    public function getSanitationStrategy() : string
+    {
+        return $this->defaultConfiguration->sanitation_strategy;
+    }
+
     public function getMaxResultsToShow() : int
     {
         return $this->defaultConfiguration->max_results_to_show;
@@ -36,16 +41,17 @@ class ConfigurationProvider implements IConfigurationProvider
     {
         return $this->defaultConfiguration->search_term_min_length;
     }
-
+    // TODO: rather than returning a 404 for those two methods, I should implement some custom
+    // errohandling thing.
     private function retrieveDefaultConfiguration()
     {
-        return Configuration::where('default', true)->first();
+        return Configuration::where('default', true)->firstOrFail();
     }
 
     private function retrieveCurrentGifProvider()
     {
         $currentGifProviderId = $this->defaultConfiguration->current_gif_provider;
 
-        return GifProvider::where('identifier', $currentGifProviderId)->first();
+        return GifProvider::where('identifier', $currentGifProviderId)->firstOrFail();
     }
 }

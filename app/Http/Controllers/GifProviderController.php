@@ -2,33 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GifProvider;
+use App\Http\Middleware\Interfaces\IGifProvidersProxy;
 
 class GifProviderController extends Controller
 {
     //TODO: those messages can go to the Configuration tables. I don't need to hardcode them.
     private const EMPTY_ARRAY_MESSAGE = "Sorry, we didn't find any available gif providers";
-    private const PROVIDER_NOT_FOUND_MESSAGE = "Sorry, we didn't find any provider with the requested identifier";
+    private $gifProvidersProxy;
+
+    function __construct(IGifProvidersProxy $gifProvidersProxy)
+    {
+        $this->gifProvidersProxy = $gifProvidersProxy;
+    }
 
     public function showStats(string $identifier)
     {
-        // TODO: refactor this logic.
-        $providerData = GifProvider::where('identifier', $identifier)->first();
-
-        if (empty($providerData->identifier))
-        {
-            abort(404, self::PROVIDER_NOT_FOUND_MESSAGE);
-        }
-
-        $toReturn = ["calls" => $providerData->calls, 
-                     "keywords" => $providerData->keyword()->select('keyword_value', 'call_counter')->get()];
+        $toReturn = ["calls" => $this->gifProvidersProxy->getCallsPerProvider($identifier),
+                     "keywords" => $this->gifProvidersProxy->getKeywordsPerProvider($identifier)];
 
         return $toReturn;
     }
 
     public function list()
     {
-        $providers = ["providers" => GifProvider::select('identifier', 'description', 'calls')->get()];
+        $providers = ["providers" => $this->gifProvidersProxy->getProviderList()];
 
         if (empty($providers))
         {
