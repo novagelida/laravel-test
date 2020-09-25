@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Http\Middleware\Interfaces\IGifProviderProxy;
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
 
-class GifProviderProxy implements IGifProviderProxy
+class DefaultGifProviderProxy implements IGifProviderProxy
 {
     private $defaultProvider;
 
@@ -29,14 +29,18 @@ class GifProviderProxy implements IGifProviderProxy
         return $this->defaultProvider->research_endpoint;
     }
 
-    public function incrementCalls(string $keyword)
+    public function incrementCalls()
     {
-        $this->incrementProviderCalls($this->defaultProvider);
+        $this->defaultProvider->incrementCalls();
     }
 
-    private function incrementProviderCalls($provider)
+    public function getKeywords()
     {
-        $provider->calls = $provider->calls+1;
-        $provider->save();
+        return $this->defaultProvider->keyword()->select('keyword_value', 'call_counter')->get();
+    }
+
+    public function getCalls()
+    {
+        return $this->defaultProvider->calls;
     }
 }

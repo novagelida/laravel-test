@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
 use App\Http\Middleware\ConfigurationProvider;
-use App\Http\Middleware\GifProviderProxy;
+use App\Http\Middleware\DefaultGifProviderProxy;
 use App\Http\Middleware\Interfaces\IGifProviderProxy;
 use App\Http\Middleware\Interfaces\IKeywordProxy;
 use App\Http\Middleware\Interfaces\IResearchStrategy;
 use App\Http\Middleware\Interfaces\ISearchResultFormatter;
-use App\Http\Middleware\ToSimpleArraySearchResultFormatter;
+use App\Http\Middleware\Interfaces\IGifProvidersProxy;
+use App\Http\Middleware\TenorResultToSimpleArrayFormatter;
+use App\Http\Middleware\GifProvidersProxy;
 use App\Http\Middleware\Helpers\SearchResultFormatterClassMapper;
 use App\Http\Middleware\Helpers\ResearchStrategyClassMapper;
 use App\Http\Middleware\KeywordProxy;
@@ -19,11 +21,12 @@ class AppServiceProvider extends ServiceProvider
 {
     public $bindings = [
         IKeywordProxy::class => KeywordProxy::class,
-        IGifProviderProxy::class => GifProviderProxy::class,
-        ISearchResultFormatter::class => ToSimpleArraySearchResultFormatter::class,
+        IGifProvidersProxy::class => GifProvidersProxy::class,
+        ISearchResultFormatter::class => TenorResultToSimpleArrayFormatter::class
     ];
 
     public $singletons  = [
+        IGifProviderProxy::class => DefaultGifProviderProxy::class,
         IConfigurationProvider::class => ConfigurationProvider::class
     ];
 

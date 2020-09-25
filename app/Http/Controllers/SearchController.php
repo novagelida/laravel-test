@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Cache;
 
 class SearchController extends Controller
 {
+    // TODO: This error message should suggest what the valid keywords are. 
+    private const INVALID_KEYWORD_MESSAGE = "Keyword not valid!";
     private $configuration;
     private $gifProviderProxy;
     private $keywordProxy;
@@ -35,7 +37,7 @@ class SearchController extends Controller
 
         if (empty($keyword))
         {
-            return "Error!";
+            return self::INVALID_KEYWORD_MESSAGE;
         }
 
         $this->incrementKeywordCallCounter($keyword);
@@ -45,7 +47,7 @@ class SearchController extends Controller
             return Cache::get($keyword);
         }
 
-        $this->gifProviderProxy->incrementCalls($keyword);
+        $this->gifProviderProxy->incrementCalls();
 
         $results = $this->researchStrategy->search($keyword);
         $results = $this->searchResultsFormatter->format($results);

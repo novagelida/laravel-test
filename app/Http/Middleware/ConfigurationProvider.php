@@ -36,7 +36,8 @@ class ConfigurationProvider implements IConfigurationProvider
     {
         return $this->defaultConfiguration->search_term_min_length;
     }
-
+    // TODO: rather than returning a 404 for those two methods, I should implement some custom
+    // errohandling thing.
     private function retrieveDefaultConfiguration()
     {
         return Configuration::where('default', true)->firstOrFail();
