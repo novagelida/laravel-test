@@ -4,7 +4,7 @@ namespace App\Http\Middleware\Strategies;
 
 use App\Http\Middleware\Interfaces\IResearchStrategy;
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
-use App\Http\Middleware\Interfaces\IGifProviderProxy;
+use App\Http\Middleware\Interfaces\IDefaultGifProviderProxy;
 use Illuminate\Support\Facades\Http;
 
 class BasicTenorResearchStrategy implements IResearchStrategy
@@ -15,7 +15,7 @@ class BasicTenorResearchStrategy implements IResearchStrategy
     private $gifProviderProxy;
 
     public function __construct(IConfigurationProvider $configurationProvider,
-                                IGifProviderProxy $gifProviderProxy)
+                                IDefaultGifProviderProxy $gifProviderProxy)
     {
         $this->configuration = $configurationProvider;
         $this->gifProviderProxy = $gifProviderProxy;

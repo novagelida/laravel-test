@@ -2,16 +2,25 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Middleware\Interfaces\IGifProviderProxy;
+use App\Http\Middleware\Interfaces\IDefaultGifProviderProxy;
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
+use App\Events\DefaultProviderChanged;
+use App\Listeners\DefaultProviderChangedListener;
 
-class DefaultGifProviderProxy implements IGifProviderProxy
+class DefaultGifProviderProxy extends DefaultProviderChangedListener implements IDefaultGifProviderProxy
 {
     private $defaultProvider;
+    private $configurationProvider;
 
     public function __construct(IConfigurationProvider $configurationProvider)
     {
+        $this->configurationProvider = $configurationProvider;
         $this->defaultProvider = $configurationProvider->getGifProvider();
+    }
+
+    public function handle(DefaultProviderChanged $event)
+    {
+        $this->defaultProvider = $this->configurationProvider->getGifProvider();
     }
 
     public function getDefaultGifProvider()

@@ -12,4 +12,10 @@ class Configuration extends Model
     public $timestamps = false;
     protected $primaryKey = 'id';
     protected $keyType = 'string';
+
+    public function updateDefaultGifProvider(string $identifier)
+    {
+        $this->current_gif_provider = $identifier;
+        $this->save();
+    }
 }

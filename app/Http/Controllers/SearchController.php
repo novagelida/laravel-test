@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Interfaces\IKeywordProxy;
-use App\Http\Middleware\Interfaces\IGifProviderProxy;
+use App\Http\Middleware\Interfaces\IDefaultGifProviderProxy;
 use App\Http\Middleware\Interfaces\ISearchResultFormatter;
 use App\Http\Middleware\Interfaces\IResearchStrategy;
 use App\Http\Middleware\Interfaces\ISanitationStrategy;
@@ -23,7 +23,7 @@ class SearchController extends Controller
     private $sanitationStrategy;
 
     public function __construct(IKeywordProxy $keywordProxy,
-                                IGifProviderProxy $gifProviderProxy,
+                                IDefaultGifProviderProxy $gifProviderProxy,
                                 ISearchResultFormatter $searchResultFormatter,
                                 IResearchStrategy $researchStrategy,
                                 ISanitationStrategy $sanitationStrategy)

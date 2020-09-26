@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware\Interfaces;
 
-interface IGifProviderProxy
+interface IDefaultGifProviderProxy
 {
     public function getDefaultGifProvider();
 
