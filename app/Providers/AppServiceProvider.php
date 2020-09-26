@@ -53,14 +53,14 @@ class AppServiceProvider extends ServiceProvider
              ->needs(ISearchResultFormatter::class)
              ->give(function () use ($configuration){
                  $class = SearchResultFormatterClassMapper::map($configuration->getGifProvider()->formatter);
-                 resolve($class);
+                 return resolve($class);
              });
 
         $this->app->when(SearchController::class)
              ->needs(IResearchStrategy::class)
              ->give(function () use ($configuration){
                  $class = ResearchStrategyClassMapper::map($configuration->getGifProvider()->research_strategy);
-                 resolve($class);
+                 return resolve($class);
              });
              
         $this->app->bind(ISanitationStrategy::class, SanitationStrategyClassMapper::map($configuration->getSanitationStrategy()));
