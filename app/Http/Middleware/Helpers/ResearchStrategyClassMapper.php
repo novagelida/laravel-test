@@ -3,6 +3,7 @@
 namespace App\Http\Middleware\Helpers;
 
 use App\Http\Middleware\Strategies\BasicTenorResearchStrategy;
+use App\Http\Middleware\Strategies\BasicGiphyResearchStrategy;
 
 class ResearchStrategyClassMapper
 {
@@ -20,6 +21,8 @@ class ResearchStrategyClassMapper
 
     private static function initialiseClassNameMap()
     {
-        self::$classNameMap = ['basicTenor' => BasicTenorResearchStrategy::class];
+        self::$classNameMap = ['basicTenor' => BasicTenorResearchStrategy::class,
+                               'basicGiphy' => BasicGiphyResearchStrategy::class
+                            ];
     }
 }
