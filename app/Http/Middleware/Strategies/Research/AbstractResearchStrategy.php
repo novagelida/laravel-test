@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Middleware\Strategies;
+namespace App\Http\Middleware\Strategies\Research;
 
 use App\Http\Middleware\Interfaces\IResearchStrategy;
 use App\Http\Middleware\Interfaces\IConfigurationProvider;
 use App\Http\Middleware\Interfaces\IDefaultGifProviderProxy;
 use Illuminate\Support\Facades\Http;
 
-class BasicTenorResearchStrategy implements IResearchStrategy
+abstract class AbstractResearchStrategy implements IResearchStrategy
 {
     private const ERROR_MESSAGE = "Something went wrong in performing your research";
 
@@ -29,13 +29,15 @@ class BasicTenorResearchStrategy implements IResearchStrategy
         $apiKey = $this->gifProviderProxy->getCredentials()->api_key;
         $limit = $this->configuration->getMaxResultsToShow();
 
-        $response = Http::get($protocol.'://'.$domain, ['q'=>$keyword, 'key'=> $apiKey, 'limit'=>$limit]);
+        $response = Http::get($protocol.'://'.$domain, $this->generateParams($keyword, $apiKey, $limit));
 
-        if (!$response->successful())
+        if (is_null($response) || !$response->successful())
         {
             return self::ERROR_MESSAGE;
         }
 
         return $response->body();
     }
+
+    protected abstract function generateParams($keyword, $apiKey, $limit);
 }
