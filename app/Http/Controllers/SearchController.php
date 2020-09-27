@@ -47,9 +47,9 @@ class SearchController extends Controller
         $this->incrementKeywordCallCounter($keyword);
 
         //TODO: I might encapsulate cache behavior to avoid exposing details like tags
-        if (Cache::tags(['gif_results'])->has($keyword))
+        if (Cache::has($keyword))
         {
-            return Cache::tags(['gif_results'])->get($keyword);
+            return Cache::get($keyword);
         }
 
         $this->gifProviderProxy->incrementCalls();
@@ -62,7 +62,7 @@ class SearchController extends Controller
             return response(self::NO_RESULTS_MESSAGE, self::IM_A_TEAPOT_ERROR_CODE);
         }
 
-        Cache::tags(['gif_results'])->put($keyword, $results, now()->addHours(6));
+        Cache::put($keyword, $results, now()->addHours(6));
 
         return $results;
     }

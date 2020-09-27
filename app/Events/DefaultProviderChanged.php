@@ -25,7 +25,7 @@ class DefaultProviderChanged
     public function __construct($identifier)
     {
         $this->identifier = $identifier;
-        Cache::tags(['gif_results'])->flush();
+        Cache::flush();
     }
 
     /**

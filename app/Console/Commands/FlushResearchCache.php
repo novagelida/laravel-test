@@ -38,7 +38,7 @@ class FlushResearchCache extends Command
      */
     public function handle()
     {
-        Cache::tags(['gif_results'])->flush();
+        Cache::flush();
 
         return 0;
     }
