@@ -38,7 +38,14 @@ class SetMaxResults extends Command
      */
     public function handle(IConfigurationProxy $configurationProxy)
     {
-        $configurationProxy->setMaxResultsToShow($this->argument('results'));
+        $maxResultsToShow = $this->argument('results');
+
+        if ($maxResultsToShow)
+        {
+            return -1;
+        }
+
+        $configurationProxy->setMaxResultsToShow($maxResultsToShow);
 
         return 0;
     }
