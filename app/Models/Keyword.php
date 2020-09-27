@@ -11,7 +11,7 @@ class Keyword extends Model
     protected $keyType = 'string';
     protected $hidden = ['pivot'];
 
-    public function gifProvider()
+    public function gifProviders()
     {
         return $this->belongsToMany(GifProvider::class)->withPivot('call_counter');
     }

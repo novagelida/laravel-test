@@ -21,7 +21,7 @@ class GifProvidersProxy implements IGifProvidersProxy
 
     public function getKeywordsPerProvider($identifier)
     {
-        return $this->getProviderByIdentifier($identifier)->keyword()->select('keyword_value', 'call_counter')->get();
+        return $this->getProviderByIdentifier($identifier)->keywords()->select('keyword_value', 'call_counter')->get();
     }
 
     public function getProviderList()

@@ -10,7 +10,7 @@ class KeywordProxy implements IKeywordProxy
 {
     public function resetProvidersCallCount(string $keyword)
     {
-        $statsPerProvider = $this->getKeyword($keyword)->gifProvider()->get();
+        $statsPerProvider = $this->getKeyword($keyword)->gifProviders()->get();
 
         if (empty($statsPerProvider))
         {
@@ -48,11 +48,11 @@ class KeywordProxy implements IKeywordProxy
 
     public function incrementOrCreateRelationshipCalls($provider, string $keyword)
     {
-        $relationship = $provider->keyword()->where('keyword_value', $keyword)->first();
+        $relationship = $provider->keywords()->where('keyword_value', $keyword)->first();
 
         if ($relationship == null)
         {
-            $this->insertKeywordIntoRelationship($keyword, $provider->identifier);
+            $provider->keywords()->attach($keyword);
             return;
         }
 
@@ -62,14 +62,6 @@ class KeywordProxy implements IKeywordProxy
     private function incrementRelationshipCalls($relationship)
     {
         $relationship->call_counter++;
-        $relationship->save();
-    }
-
-    private function insertKeywordIntoRelationship($keyword, $identifier)
-    {
-        $relationship = new GifProviderKeyword;
-        $relationship->keyword_value = $keyword;
-        $relationship->gif_provider_identifier = $identifier;
         $relationship->save();
     }
 }
