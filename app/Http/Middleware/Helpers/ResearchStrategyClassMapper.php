@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware\Helpers;
 
-use App\Http\Middleware\Strategies\BasicTenorResearchStrategy;
-use App\Http\Middleware\Strategies\BasicGiphyResearchStrategy;
+use App\Http\Middleware\Strategies\Research\BasicTenorResearchStrategy;
+use App\Http\Middleware\Strategies\Research\BasicGiphyResearchStrategy;
 
 class ResearchStrategyClassMapper
 {

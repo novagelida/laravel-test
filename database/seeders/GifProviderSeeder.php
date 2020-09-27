@@ -22,13 +22,14 @@ class GifProviderSeeder extends Seeder
             'research_endpoint' => 'api.tenor.com/v1/search'
         ]);
 
-        //Example: http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=YOUR_API_KEY&limit=5
         DB::table('gif_providers')->insert([
             'identifier' => 'giphy',
             'description' => 'this is giphy',
             'calls' => 0,
             'credentials' => json_encode(['api_key' => 'XJjbtjbIsJxVdFirK8GXHN85ulrTHCt4', 'protocol' => 'http']),
-            'research_endpoint' => 'api.giphy.com/v1/gifs/search'
+            'research_endpoint' => 'api.giphy.com/v1/gifs/search',
+            'research_strategy' => 'basicGiphy',
+            'formatter' => 'formGiphyToArray'
         ]);
 
     }
