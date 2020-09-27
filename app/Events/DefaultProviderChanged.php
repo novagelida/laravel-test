@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Cache;
 
 class DefaultProviderChanged
 {
@@ -24,6 +25,7 @@ class DefaultProviderChanged
     public function __construct($identifier)
     {
         $this->identifier = $identifier;
+        Cache::tags(['gif_results'])->flush();
     }
 
     /**
