@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\GifProvider;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,8 +24,6 @@ class CreateGifProvidersTable extends Migration
             $table->enum('formatter', ['fromTenorToArray', 'fromGiphyToArray'])->default('fromTenorToArray');
             $table->primary('identifier');
         });
-
-        GifProvider::factory()->create();
     }
 
     /**
