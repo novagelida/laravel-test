@@ -10,7 +10,9 @@ use App\Http\Middleware\Interfaces\IKeywordProxy;
 use App\Http\Middleware\Interfaces\IResearchStrategy;
 use App\Http\Middleware\Interfaces\ISearchResultFormatter;
 use App\Http\Middleware\Interfaces\IGifProvidersProxy;
+use App\Http\Middleware\Interfaces\IConfigurationProxy;
 use App\Http\Middleware\GifProvidersProxy;
+use App\Http\Middleware\ConfigurationProxy;
 use App\Http\Middleware\Helpers\SearchResultFormatterClassMapper;
 use App\Http\Middleware\Helpers\ResearchStrategyClassMapper;
 use App\Http\Middleware\Helpers\SanitationStrategyClassMapper;
@@ -25,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
     public $bindings = [
         IKeywordProxy::class => KeywordProxy::class,
         IGifProvidersProxy::class => GifProvidersProxy::class,
-        ISanitationStrategy::class => BasicSanitationStrategy::class
+        ISanitationStrategy::class => BasicSanitationStrategy::class,
+        IConfigurationProxy::class => ConfigurationProxy::class
     ];
 
     public $singletons  = [

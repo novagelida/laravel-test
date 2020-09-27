@@ -18,4 +18,10 @@ class Configuration extends Model
         $this->current_gif_provider = $identifier;
         $this->save();
     }
+
+    public function setMaxResultsTOShow(int $resultsToShow)
+    {
+        $this->max_results_to_show = $resultsToShow;
+        $this->save();
+    }
 }
