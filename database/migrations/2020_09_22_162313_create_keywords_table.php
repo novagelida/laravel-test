@@ -14,8 +14,6 @@ class CreateKeywordsTable extends Migration
     public function up()
     {
         Schema::create('keywords', function (Blueprint $table) {
-            //TODO: we might want to add a research frequency counter and, maybe, also
-            // a 'last reasearch' timestamp column
             $table->string('value', 100);
             $table->integer('calls')->default(1);
             $table->primary('value');
