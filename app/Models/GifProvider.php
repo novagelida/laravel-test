@@ -26,4 +26,10 @@ class GifProvider extends Model
         $this->increment('calls', 1);
         $this->save();
     }
+
+    public function updateCredentials($credentials)
+    {
+        $this->credentials = $credentials;
+        $this->save();
+    }
 }
