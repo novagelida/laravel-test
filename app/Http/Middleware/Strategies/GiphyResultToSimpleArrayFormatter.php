@@ -8,6 +8,13 @@ class GiphyResultToSimpleArrayFormatter implements ISearchResultFormatter
 {
     public function format($results)
     {
-        return $results;
+        return array_map(function ($item) {
+                return $this->extractGifUrl($item);
+            }, json_decode($results)->data);
+    }
+
+    private function extractGifUrl($item)
+    {
+        return $item->url;
     }
 }
