@@ -38,7 +38,16 @@ class SetProvider extends Command
      */
     public function handle()
     {
-        event(new DefaultProviderChanged($this->argument('id')));
+        $id = $this->argument('id');
+
+        if(empty($id))
+        {
+            $this->error('please provide a non-empty provider id!');
+
+            return -1;
+        }
+
+        event(new DefaultProviderChanged($id));
         
         return 0;
     }
