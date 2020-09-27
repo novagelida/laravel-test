@@ -25,6 +25,7 @@ class ChangeProviderController extends Controller
 
         event(new DefaultProviderChanged($identifier));
 
+        // TODO: use a constant rather than a magic string
         return response("ok", 204);
     }
 }

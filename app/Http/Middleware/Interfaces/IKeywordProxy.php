@@ -13,4 +13,6 @@ interface IKeywordProxy
     public function incrementOrCreateRelationshipCalls($keywordModel, string $keyword);
 
     public function getStatsPerKeyword(string $keyword);
+
+    public function resetProvidersCallCount(string $keyword);
 }

@@ -8,6 +8,22 @@ use App\Models\GifProviderKeyword;
 
 class KeywordProxy implements IKeywordProxy
 {
+    public function resetProvidersCallCount(string $keyword)
+    {
+        $statsPerProvider = $this->getKeyword($keyword)->gifProvider()->get();
+
+        if (empty($statsPerProvider))
+        {
+            return;
+        }
+
+        foreach ($statsPerProvider as &$row)
+        {
+            $row->pivot->call_counter = 0;
+            $row->pivot->save();
+        }
+    }
+
     public function getKeyword(string $keyword)
     {
         return Keyword::where('value', $keyword)->first();
