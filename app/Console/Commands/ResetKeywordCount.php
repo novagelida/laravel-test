@@ -42,6 +42,7 @@ class ResetKeywordCount extends Command
 
         if (empty($keyword))
         {
+            $this->error('Please provide a non-empty keyword!');
             return -1;
         }
 

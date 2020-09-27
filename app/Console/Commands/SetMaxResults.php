@@ -40,8 +40,9 @@ class SetMaxResults extends Command
     {
         $maxResultsToShow = $this->argument('results');
 
-        if ($maxResultsToShow)
+        if ($maxResultsToShow == 0)
         {
+            $this->error('results has to be a non-zero, positive integer!');
             return -1;
         }
 
