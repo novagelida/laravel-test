@@ -5,6 +5,7 @@ use App\Http\Controllers\GifProviderController;
 use App\Http\Controllers\ChangeProviderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\KeywordsController;
+use App\Http\Controllers\ChangeCredentialsController;
 
 // TODO: This route should point to something different
 Route::get('/', function () {
@@ -15,5 +16,6 @@ Route::get('/', function () {
 Route::get('/providers', [GifProviderController::class, 'list']);
 Route::get('/provider/{identifiers}/stats', [GifProviderController::class, 'showStats']);
 Route::post('/provider/{identifier}', [ChangeProviderController::class, 'setDefaultProvider']);
+Route::post('/provider/{identifier}/credentials', [ChangeCredentialsController::class, 'updateCredentials']);
 Route::get('/gifs/{keyword}', [SearchController::class, 'search']);
 Route::get('/gifs/{keyword}/stats', [KeywordsController::class, 'showStatsPerKeyword']);

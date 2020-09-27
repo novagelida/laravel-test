@@ -11,4 +11,6 @@ interface IGifProvidersProxy
     public function isProviderAvailable(string $identifier) : bool;
 
     public function getProviderList();
+
+    public function updateCredentials(string $identifier, $credentials);
 }
