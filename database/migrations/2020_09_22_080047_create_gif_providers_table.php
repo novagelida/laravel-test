@@ -21,8 +21,8 @@ class CreateGifProvidersTable extends Migration
             $table->integer('calls');
             $table->json('credentials');
             $table->string('research_endpoint');
-            $table->enum('research_strategy', ['basicTenor'])->default('basicTenor');
-            $table->enum('formatter', ['toSimpleArray'])->default('toSimpleArray');
+            $table->enum('research_strategy', ['basicTenor', 'basicGiphy'])->default('basicTenor');
+            $table->enum('formatter', ['fromTenorToArray', 'fromGiphyToArray'])->default('fromTenorToArray');
             $table->primary('identifier');
         });
 

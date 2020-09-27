@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Interfaces\IKeywordProxy;
-use App\Http\Middleware\Interfaces\IGifProviderProxy;
+use App\Http\Middleware\Interfaces\IDefaultGifProviderProxy;
 use App\Http\Middleware\Interfaces\ISearchResultFormatter;
 use App\Http\Middleware\Interfaces\IResearchStrategy;
 use App\Http\Middleware\Interfaces\ISanitationStrategy;
@@ -23,7 +23,7 @@ class SearchController extends Controller
     private $sanitationStrategy;
 
     public function __construct(IKeywordProxy $keywordProxy,
-                                IGifProviderProxy $gifProviderProxy,
+                                IDefaultGifProviderProxy $gifProviderProxy,
                                 ISearchResultFormatter $searchResultFormatter,
                                 IResearchStrategy $researchStrategy,
                                 ISanitationStrategy $sanitationStrategy)
@@ -46,9 +46,10 @@ class SearchController extends Controller
 
         $this->incrementKeywordCallCounter($keyword);
 
-        if (Cache::has($keyword))
+        //TODO: I might encapsulate cache behavior to avoid exposing details like tags
+        if (Cache::tags(['gif_results'])->has($keyword))
         {
-            return Cache::get($keyword);
+            return Cache::tags(['gif_results'])->get($keyword);
         }
 
         $this->gifProviderProxy->incrementCalls();
@@ -61,7 +62,7 @@ class SearchController extends Controller
             return response(self::NO_RESULTS_MESSAGE, self::IM_A_TEAPOT_ERROR_CODE);
         }
 
-        Cache::put($keyword, $results, now()->addHours(6));
+        Cache::tags(['gif_results'])->put($keyword, $results, now()->addHours(6));
 
         return $results;
     }

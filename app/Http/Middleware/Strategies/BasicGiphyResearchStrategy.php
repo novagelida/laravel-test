@@ -7,7 +7,7 @@ use App\Http\Middleware\Interfaces\IConfigurationProvider;
 use App\Http\Middleware\Interfaces\IDefaultGifProviderProxy;
 use Illuminate\Support\Facades\Http;
 
-class BasicTenorResearchStrategy implements IResearchStrategy
+class BasicGiphyResearchStrategy implements IResearchStrategy
 {
     private const ERROR_MESSAGE = "Something went wrong in performing your research";
 
@@ -23,19 +23,20 @@ class BasicTenorResearchStrategy implements IResearchStrategy
 
     public function search(string $keyword) : string
     {
-        $defaultProtocol = $this->configuration->getDefaultRequestProtocol();
-        $protocol = $this->gifProviderProxy->getCredentials()->protocol ?? $defaultProtocol;
-        $domain = $this->gifProviderProxy->getResearchDomain();
-        $apiKey = $this->gifProviderProxy->getCredentials()->api_key;
-        $limit = $this->configuration->getMaxResultsToShow();
+        // $defaultProtocol = $this->configuration->getDefaultRequestProtocol();
+        // $protocol = $this->gifProviderProxy->getCredentials()->protocol ?? $defaultProtocol;
+        // $domain = $this->gifProviderProxy->getResearchDomain();
+        // $apiKey = $this->gifProviderProxy->getCredentials()->api_key;
+        // $limit = $this->configuration->getMaxResultsToShow();
 
-        $response = Http::get($protocol.'://'.$domain, ['q'=>$keyword, 'key'=> $apiKey, 'limit'=>$limit]);
+        // $response = Http::get($protocol.'://'.$domain, ['q'=>$keyword, 'key'=> $apiKey, 'limit'=>$limit]);
 
-        if (!$response->successful())
-        {
-            return self::ERROR_MESSAGE;
-        }
+        // if (!$response->successful())
+        // {
+        //     return self::ERROR_MESSAGE;
+        // }
 
-        return $response->body();
+        // return $response->body();
+        return "I should look for ".$keyword;
     }
 }

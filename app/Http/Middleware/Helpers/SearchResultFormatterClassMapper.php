@@ -3,6 +3,7 @@
 namespace App\Http\Middleware\Helpers;
 
 use App\Http\Middleware\Strategies\TenorResultToSimpleArrayFormatter;
+use App\Http\Middleware\Strategies\GiphyResultToSimpleArrayFormatter;
 
 class SearchResultFormatterClassMapper
 {
@@ -20,6 +21,8 @@ class SearchResultFormatterClassMapper
 
     private static function initialiseClassNameMap()
     {
-        self::$classNameMap = ['toSimpleArray' => TenorResultToSimpleArrayFormatter::class];
+        self::$classNameMap = ['fromTenorToArray' => TenorResultToSimpleArrayFormatter::class,
+                               'fromGiphyToArray' => GiphyResultToSimpleArrayFormatter::class
+                            ];
     }
 }

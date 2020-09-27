@@ -9,6 +9,11 @@ class GifProvidersProxy implements IGifProvidersProxy
 {
     private const PROVIDER_NOT_FOUND_MESSAGE = "Sorry, we didn't find any provider with the requested identifier";
 
+    public function isProviderAvailable(string $identifier) : bool
+    {
+        return !empty(GifProvider::where('identifier', $identifier)->first());
+    }
+
     public function getCallsPerProvider($identifier)
     {
         return $this->getProviderByIdentifier($identifier)->calls;
