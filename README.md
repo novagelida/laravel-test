@@ -12,7 +12,7 @@ Prova tecnica successiva al colloquio. <a href="/docs/prova_tecnica.pdf">QUI</a>
 Ogni punto del documento di specifica è stato implementato per intero compreso l'extra di cui fornisco dettagli implementativi in seguito.
 
 - [Comandi](#comandi)
-- [Configurazione](#configurazione)auto    
+- [Configurazione](#configurazione)    
     - [Configurazione applicazione (tabella 'configuration')](#configurazione-applicazione-tabella-configuration)
     - [Configurazione GifProvider (tabella 'gif_providers')](#configurazione-gifprovider-tabella-gif_providers)
 - [Architettura](#architettura)
