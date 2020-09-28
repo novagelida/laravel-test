@@ -9,6 +9,7 @@ class ChangeCredentialsController extends Controller
 {
     private const INVALID_IDENTIFIER = "Invalid identifier provided";
     private const PROVIDER_NOT_AVAILABLE = "Provider not available";
+    private const CREDENTIALS_UPDATED = "Credentials correctly updated";
     private const INVALID_CREDENTIALS = "The payload does not contain a valid credential json";
     private const IM_A_TEAPOT_ERROR_CODE = 418;
 
@@ -38,7 +39,7 @@ class ChangeCredentialsController extends Controller
 
         $this->gifProvidersProxy->updateCredentials($identifier, json_encode($request->all()));
         
-        return response("all good", 204); 
+        return response(self::CREDENTIALS_UPDATED, 204);
     }
 
     private function validatePayload($payload) : bool
