@@ -109,6 +109,7 @@ L'unico evento utilizzato all'interno dell'applicazione è ***DefaultProviderCha
 - Utilizzare i tags per gestire la cache. I tags non possono essere utilizzati nella versione attaule in quanto utilizza "file" come providere di default. I
 nizialmente avevo impostato un server redis quindi vi è traccia dell'utilizzo dei tags. Tuttavia, per velocità di sviluppo ho preferito non lavorare piu con redis.
 - Tutte le stringhe contenenti messaggi informativi o errori potrebbero essere gestite tramite value objects o tabelle sul database.
+- Utilizzare dei diagrammi (plantuml) per descrivere le interazioni fra gli oggetti.
 
 ### Esercizio extra: POST /provider/{identifier}/credentials
 **Endpoint:** POST /provider/{identifier}/credentials
